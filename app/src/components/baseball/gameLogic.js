@@ -27,7 +27,7 @@ const toggleBatting = scoreboard => {
 };
 
 const addStrike = scoreboard => {
-  newBoard = cloneBoard(scoreboard);
+  const newBoard = cloneBoard(scoreboard);
   newBoard.atBat.strikes = (newBoard.atBat.strikes + 1) % 3;
   return newBoard;
 };
@@ -57,12 +57,32 @@ const setTeams = (home, away, scoreboard) => {
   return newBoard;
 };
 
-module.exports = {
-  addStrike,
+export {
   addBall,
+  addStrike,
   toggleBatting,
   initBoard,
   setTeams,
   setHomeTeam,
   setAwayTeam
 };
+export default {
+  addBall,
+  addStrike,
+  toggleBatting,
+  initBoard,
+  setTeams,
+  setHomeTeam,
+  setAwayTeam
+};
+
+// ! old version exports !
+// module.exports = {
+//   addBall,
+//   addStrike,
+//   toggleBatting,
+//   initBoard,
+//   setTeams,
+//   setHomeTeam,
+//   setAwayTeam
+// };

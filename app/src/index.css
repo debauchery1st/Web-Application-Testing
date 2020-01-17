@@ -1,13 +1,52 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.TeamNames {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 2px;
+}
+.TeamNames-ScoreBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.ScoreBoard {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.ScoreCard {
+  margin: 1rem;
+  border-radius: 1rem;
+  border: 1px solid black;
+  padding: 1rem;
+  min-width: 12rem;
+  text-align: center;
+}
+
+.ScoreCard.AtBat {
+  text-align: center;
+}
+.AtBat {
+  text-align: right;
+  background-color: lightblue;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 1rem;
 }
