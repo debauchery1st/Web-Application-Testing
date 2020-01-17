@@ -1,4 +1,5 @@
-//- balls and strikes reset to 0 when a player reaches 3 strikes or 4 balls.
+// vanilla js - baseball logic
+
 const initAtBat = {
   strikes: 0,
   balls: 0
@@ -12,11 +13,18 @@ const initScores = {
 const initBoard = {
   score: { ...initScores },
   atBat: { ...initAtBat },
-  batting: "awayTeam"
+  batting: "awayTeam",
+  teams: { homeTeam: "", awayTeam: "" }
 };
 
 const cloneBoard = scoreboard =>
   scoreboard ? { ...scoreboard } : { ...initBoard };
+
+const toggleBatting = scoreboard => {
+  const newBoard = cloneBoard(scoreboard);
+  newBoard.batting = newBoard.batting === "awayTeam" ? "homeTeam" : "awayTeam";
+  return newBoard;
+};
 
 const addStrike = scoreboard => {
   newBoard = cloneBoard(scoreboard);
@@ -30,4 +38,31 @@ const addBall = scoreboard => {
   return newBoard;
 };
 
-module.exports = { addStrike, addBall, initAtBat };
+const setHomeTeam = (name, scoreboard) => {
+  const newBoard = cloneBoard(scoreboard);
+  newBoard.teams.homeTeam = name;
+  return newBoard;
+};
+
+const setAwayTeam = (name, scoreboard) => {
+  const newBoard = cloneBoard(scoreboard);
+  newBoard.teams.awayTeam = name;
+  return newBoard;
+};
+
+const setTeams = (home, away, scoreboard) => {
+  const newBoard = cloneBoard(scoreboard);
+  newBoard.teams.homeTeam = home;
+  newBoard.teams.awayTeam = away;
+  return newBoard;
+};
+
+module.exports = {
+  addStrike,
+  addBall,
+  toggleBatting,
+  initBoard,
+  setTeams,
+  setHomeTeam,
+  setAwayTeam
+};

@@ -1,12 +1,73 @@
-const { addStrike, addBall } = require("./gameLogic");
+const {
+  addStrike,
+  addBall,
+  toggleBatting,
+  initBoard,
+  setTeams,
+  setHomeTeam,
+  setAwayTeam
+} = require("./gameLogic");
 
-test("first strike", () => expect(addStrike().atBat.strikes).toBe(1));
-test("second strike", () => expect(addStrike().atBat.strikes).toBe(2));
-test("3rd strike will reset strikes to 0", () =>
-  expect(addStrike().atBat.strikes).toBe(0));
+let sb = initBoard;
 
-test("first ball", () => expect(addBall().atBat.balls).toBe(1));
-test("second ball", () => expect(addBall().atBat.balls).toBe(2));
-test("third ball", () => expect(addBall().atBat.balls).toBe(3));
-test("fourth ball will reset balls to 0", () =>
-  expect(addBall().atBat.balls).toBe(0));
+test("first strike", () => {
+  sb = addStrike(sb);
+  return expect(sb.atBat.strikes).toBe(1);
+});
+
+test("second strike", () => {
+  sb = addStrike(sb);
+  return expect(sb.atBat.strikes).toBe(2);
+});
+
+test("3rd strike will reset strikes to 0", () => {
+  sb = addStrike(sb);
+  return expect(sb.atBat.strikes).toBe(0);
+});
+
+test("first ball", () => {
+  sb = addBall(sb);
+  expect(sb.atBat.balls).toBe(1);
+});
+
+test("second ball", () => {
+  sb = addBall(sb);
+  expect(sb.atBat.balls).toBe(2);
+});
+
+test("third ball", () => {
+  sb = addBall(sb);
+  expect(sb.atBat.balls).toBe(3);
+});
+
+test("Fourth ball", () => {
+  sb = addBall(sb);
+  expect(sb.atBat.balls).toBe(0);
+});
+
+test("toggle team at bat", () => {
+  sb = toggleBatting(sb);
+  return expect(sb.batting).toBe("homeTeam");
+});
+
+test("toggle team at bat", () => {
+  sb = toggleBatting(sb);
+  return expect(sb.batting).toBe("awayTeam");
+});
+
+test("set teams", () => {
+  sb = setTeams("Phillies", "Cubs", sb);
+  return expect(
+    sb.teams.homeTeam === "Phillies" && sb.teams.awayTeam === "Cubs"
+  ).toBe(true);
+});
+
+test("set home team", () => {
+  sb = setHomeTeam("Phillies", sb);
+  return expect(sb.teams.homeTeam).toBe("Phillies");
+});
+
+test("set away team", () => {
+  sb = setAwayTeam("Cubs", sb);
+  return expect(sb.teams.awayTeam).toBe("Cubs");
+});
