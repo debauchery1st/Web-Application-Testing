@@ -14,7 +14,22 @@ const initBoard = {
   score: { ...initScores },
   atBat: { ...initAtBat },
   batting: "awayTeam",
-  teams: { homeTeam: "", awayTeam: "" }
+  bases: { first: "", second: "", third: "" },
+  teams: { homeTeam: "", awayTeam: "" },
+  hitter: "baseball person",
+  lineup: [
+    "Babe Ruth",
+    "Lucky McHitBall",
+    "Tommy TuTone",
+    "Rick Sanchez",
+    "Ozzy Ozbourne"
+  ]
+};
+
+const clrAB = scoreboard => {
+  const nxt = { ...scoreboard };
+  nxt.atBat = { balls: 0, strikes: 0 };
+  return nxt;
 };
 
 const cloneBoard = scoreboard =>
@@ -56,6 +71,43 @@ const setTeams = (home, away, scoreboard) => {
   newBoard.teams.awayTeam = away;
   return newBoard;
 };
+const whoIsBatting = scoreboard =>
+  scoreboard.batting === "awayTeam"
+    ? scoreboard.teams.awayTeam
+    : scoreboard.teams.homeTeam;
+
+const foul = scoreboard => {
+  const nxt = { ...scoreboard };
+  nxt.atBat.strikes < 2 && (nxt.atBat.strikes += 1);
+  return nxt;
+};
+
+const hit = scoreboard => {
+  const nxt = { ...scoreboard };
+  //
+  const firstOccupied = nxt.bases.first !== "";
+  const secondOccupied = nxt.bases.second !== "";
+  const thirdOccupied = nxt.bases.third !== "";
+  //const basesLoaded = firstOccupied && secondOccupied && thirdOccupied;
+  if (thirdOccupied) {
+    nxt.score[nxt.batting] += 1;
+    nxt.bases.third = "";
+  }
+  if (secondOccupied && !thirdOccupied) {
+    nxt.bases.third = nxt.bases.second;
+    nxt.bases.second = "";
+  }
+  if (firstOccupied && !secondOccupied) {
+    nxt.bases.second = nxt.bases.first;
+    nxt.bases.first = nxt.hitter;
+  }
+  if (!firstOccupied) {
+    nxt.bases.first = nxt.hitter;
+  }
+  nxt.hitter = nxt.lineup[0];
+  nxt.lineup = [...nxt.lineup.slice(1)] || [`Batter ${Date()}`];
+  return clrAB(nxt);
+};
 
 export {
   addBall,
@@ -64,7 +116,11 @@ export {
   initBoard,
   setTeams,
   setHomeTeam,
-  setAwayTeam
+  setAwayTeam,
+  clrAB,
+  whoIsBatting,
+  hit,
+  foul
 };
 export default {
   addBall,
@@ -73,7 +129,11 @@ export default {
   initBoard,
   setTeams,
   setHomeTeam,
-  setAwayTeam
+  setAwayTeam,
+  clrAB,
+  whoIsBatting,
+  hit,
+  foul
 };
 
 // ! old version exports !

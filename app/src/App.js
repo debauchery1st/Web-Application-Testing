@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ScoreBoard from "./components/ScoreBoard";
 import { initBoard } from "./components/baseball";
-// import "./App.css";
 
 function App() {
   const [appState, setAppState] = useState({
@@ -9,7 +8,11 @@ function App() {
     rpc: ""
   });
 
-  const clearRPC = () => setAppState({ rpc: "" });
+  const clearRPC = oldState => {
+    const clone = { ...oldState };
+    clone.rpc = "";
+    setAppState(clone);
+  };
 
   const action = name => {
     const clone = { ...appState };
@@ -20,6 +23,8 @@ function App() {
   const strikeBtn = () => action("strike");
   const ballBtn = () => action("ball");
   const rotateBtn = () => action("rotate");
+  const hitBtn = () => action("hit");
+  const foulBtn = () => action("foul");
 
   return (
     <div className="App">
@@ -31,9 +36,13 @@ function App() {
           clr={clearRPC}
         />
       </header>
-      <button onClick={strikeBtn}>strike</button>
-      <button onClick={ballBtn}>ball</button>
-      <button onClick={rotateBtn}>rotate</button>
+      <section className="Buttons">
+        <button onClick={strikeBtn}>strike</button>
+        <button onClick={ballBtn}>ball</button>
+        <button onClick={foulBtn}>foul</button>
+        <button onClick={rotateBtn}>rotate</button>
+        <button onClick={hitBtn}>hit</button>
+      </section>
     </div>
   );
 }
